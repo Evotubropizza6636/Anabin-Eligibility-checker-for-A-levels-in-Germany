@@ -1,0 +1,524 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>German University Eligibility Checker (A-Levels)</title>\
+    <style>\
+        :root \{\
+            --primary-color: #0b3c5d;\
+            --secondary-color: #328cc1;\
+            --danger-color: #d9534f;\
+            --success-color: #5cb85c;\
+            --warning-color: #f0ad4e;\
+            --text-color: #333333;\
+            --bg-color: #f4f7f6;\
+            --card-bg: #ffffff;\
+        \}\
+\
+        * \{\
+            box-sizing: border-box;\
+            margin: 0;\
+            padding: 0;\
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\
+        \}\
+\
+        body \{\
+            background-color: var(--bg-color);\
+            color: var(--text-color);\
+            line-height: 1.6;\
+            padding: 20px;\
+            display: flex;\
+            flex-direction: column;\
+            min-height: 100vh;\
+        \}\
+\
+        .container \{\
+            max-width: 750px;\
+            width: 100%;\
+            margin: 0 auto;\
+            flex: 1;\
+        \}\
+\
+        header \{\
+            text-align: center;\
+            margin-bottom: 30px;\
+            padding: 20px 0;\
+            border-bottom: 3px solid var(--primary-color);\
+        \}\
+\
+        header h1 \{\
+            color: var(--primary-color);\
+            font-size: 2rem;\
+            margin-bottom: 10px;\
+        \}\
+\
+        header p \{\
+            color: #666;\
+            font-size: 1rem;\
+        \}\
+\
+        .card \{\
+            background: var(--card-bg);\
+            padding: 30px;\
+            border-radius: 8px;\
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);\
+            margin-bottom: 30px;\
+            transition: all 0.3s ease;\
+        \}\
+\
+        .step \{\
+            display: none;\
+        \}\
+\
+        .step.active \{\
+            display: block;\
+        \}\
+\
+        .btn-group \{\
+            display: flex;\
+            gap: 15px;\
+            margin-top: 25px;\
+        \}\
+\
+        button \{\
+            padding: 12px 24px;\
+            border: none;\
+            border-radius: 5px;\
+            cursor: pointer;\
+            font-size: 1rem;\
+            font-weight: 600;\
+            transition: background 0.2s;\
+            flex: 1;\
+        \}\
+\
+        button.btn-yes \{\
+            background-color: var(--primary-color);\
+            color: white;\
+        \}\
+\
+        button.btn-yes:hover \{\
+            background-color: var(--secondary-color);\
+        \}\
+\
+        button.btn-no \{\
+            background-color: #e0e0e0;\
+            color: #333;\
+        \}\
+\
+        button.btn-no:hover \{\
+            background-color: #d0d0d0;\
+        \}\
+\
+        button.btn-submit \{\
+            background-color: var(--primary-color);\
+            color: white;\
+        \}\
+\
+        button.btn-submit:hover \{\
+            background-color: var(--secondary-color);\
+        \}\
+\
+        .form-group \{\
+            margin-bottom: 20px;\
+        \}\
+\
+        label \{\
+            display: block;\
+            margin-bottom: 8px;\
+            font-weight: 600;\
+            color: var(--primary-color);\
+        \}\
+\
+        select \{\
+            width: 100%;\
+            padding: 12px;\
+            border: 2px solid #ddd;\
+            border-radius: 5px;\
+            font-size: 1rem;\
+            background-color: #fff;\
+            outline: none;\
+        \}\
+\
+        select:focus \{\
+            border-color: var(--secondary-color);\
+        \}\
+\
+        .result-box \{\
+            padding: 20px;\
+            border-radius: 5px;\
+            margin-top: 20px;\
+            font-weight: 500;\
+        \}\
+\
+        .result-box.error \{\
+            background-color: #fce8e6;\
+            border-left: 5px solid var(--danger-color);\
+            color: #a94442;\
+        \}\
+\
+        .result-box.success \{\
+            background-color: #e6f4ea;\
+            border-left: 5px solid var(--success-color);\
+            color: #2b542c;\
+        \}\
+\
+        .result-box.warning \{\
+            background-color: #fcf8e3;\
+            border-left: 5px solid var(--warning-color);\
+            color: #8a6d3b;\
+        \}\
+\
+        .note-block \{\
+            margin-top: 15px;\
+            font-size: 0.95rem;\
+            background: #f9f9f9;\
+            padding: 15px;\
+            border-radius: 4px;\
+            border: 1px solid #eee;\
+        \}\
+\
+        footer \{\
+            margin-top: auto;\
+            background: #fff;\
+            padding: 25px;\
+            border-radius: 8px;\
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);\
+            font-size: 0.9rem;\
+            border-top: 4px solid #ddd;\
+        \}\
+\
+        footer h3 \{\
+            color: var(--primary-color);\
+            margin-bottom: 10px;\
+            font-size: 1.1rem;\
+        \}\
+\
+        footer p \{\
+            margin-bottom: 15px;\
+            color: #555;\
+            text-align: justify;\
+        \}\
+\
+        footer a \{\
+            color: var(--secondary-color);\
+            text-decoration: none;\
+            font-weight: 600;\
+        \}\
+\
+        footer a:hover \{\
+            text-decoration: underline;\
+        \}\
+\
+        .reset-btn \{\
+            background-color: #666;\
+            color: white;\
+            margin-top: 20px;\
+            max-width: 200px;\
+        \}\
+    </style>\
+</head>\
+<body>\
+\
+    <div class="container">\
+        <header>\
+            <h1>German University Eligibility Checker</h1>\
+            <p>An unofficial guide for A-Level students matching KMK & Anabin regulations</p>\
+        </header>\
+\
+        <div class="card">\
+            <!-- Step 1: Volume Check -->\
+            <div id="step-1" class="step active">\
+                <h2>Question 1</h2>\
+                <p style="margin-top: 10px; font-size: 1.1rem;">Have you or will you have studied 3 full Advanced Level subjects in A Levels?</p>\
+                <div class="btn-group">\
+                    <button class="btn-yes" onclick="nextStep(2)">Yes</button>\
+                    <button class="btn-no" onclick="showRejection()">No</button>\
+                </div>\
+            </div>\
+\
+            <!-- Step 2: Grade Check -->\
+            <div id="step-2" class="step">\
+                <h2>Question 2</h2>\
+                <p style="margin-top: 10px; font-size: 1.1rem;">Have you at least obtained 3 C's or better in your subjects?</p>\
+                <div class="btn-group">\
+                    <button class="btn-yes" onclick="nextStep(3)">Yes</button>\
+                    <button class="btn-no" onclick="showRejection()">No</button>\
+                </div>\
+            </div>\
+\
+            <!-- Step 3: Subject Configuration -->\
+            <div id="step-3" class="step">\
+                <h2>Subject Selection</h2>\
+                <p style="margin-bottom: 20px; color: #666;">Please select your 3 full A-Level subjects below to analyze independence rules and specific notes.</p>\
+                \
+                <div class="form-group">\
+                    <label for="sub1">Subject 1</label>\
+                    <select id="sub1"></select>\
+                </div>\
+                <div class="form-group">\
+                    <label for="sub2">Subject 2</label>\
+                    <select id="sub2"></select>\
+                </div>\
+                <div class="form-group">\
+                    <label for="sub3">Subject 3</label>\
+                    <select id="sub3"></select>\
+                </div>\
+\
+                <div class="btn-group">\
+                    <button class="btn-submit" onclick="evaluateSubjects()">Check Eligibility</button>\
+                </div>\
+            </div>\
+\
+            <!-- Results Output -->\
+            <div id="result-display" style="display: none;">\
+                <div id="result-text" class="result-box"></div>\
+                <div id="additional-notes"></div>\
+                <button class="reset-btn" onclick="resetWizard()">Start Over</button>\
+            </div>\
+        </div>\
+\
+        <footer>\
+            <h3>Verify Your Eligibility Manually</h3>\
+            <p>You can determine your eligibility yourself by visiting the following website: <a href="https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#" target="_blank">https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#</a> and selecting 'Gro\'dfbritannien', followed by 'International Advanced Level'.</p>\
+            <p>Alternatively, if the link is invalid or fails to open, you can go directly to the Anabin homepage. Navigate to the 'Schulabschl\'fcsse mit Hochschulzugang' (School leaving certificates with university entrance qualifications) section, select 'Gro\'dfbritannien', and then choose 'International Advanced Level'.</p>\
+            \
+            <h3>Important Disclaimer</h3>\
+            <p>It is still highly advised to check all entry requirements with your chosen university before submitting an application[cite: 1]. This tool provides information for guidance only, as each university retains the right to set its own specific entry requirements, including subject choices, combinations, and language prerequisites, within the broader recommendations of the Central Office for Foreign Education[cite: 1].</p>\
+            <p>As a best practice, if you are not absolutely sure about your eligibility, please contact your university's admissions office, use the uni-assist contact form available on their website, reach out via the contact information provided by Anabin, or consult any other concerned authority involved in your admission process.</p>\
+        </footer>\
+    </div>\
+\
+    <script>\
+        // Comprehensive master list of subjects gathered from Anabin List A, B, and C\
+        const subjectDatabase = [\
+            \{ name: "Accounting", category: "Invalid", conflicts: [], zab: false, notes: "Accounting is not considered a valid academic subject for university admission framework requirements in Germany." \},\
+            \{ name: "Ancient History", category: "History-Related", conflicts: ["History"], zab: false \},\
+            \{ name: "Arabic (listening reading and writing)", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Art and Design", category: "Art", conflicts: [], zab: false, notes: "Valid focus areas include: Craft and Design, Fine Art, Graphic Communication, Photography, Textile Design, Three-Dimensional Design, and Critical and Contextual Studies[cite: 4]." \},\
+            \{ name: "Bengali", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Biblical Hebrew", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Biology", category: "Biology", conflicts: [], zab: false \},\
+            \{ name: "Biology A", category: "Biology", conflicts: [], zab: false \},\
+            \{ name: "Biology A (Salters-Nuffield)", category: "Biology", conflicts: [], zab: false \},\
+            \{ name: "Biology B", category: "Biology", conflicts: [], zab: false \},\
+            \{ name: "Biology B (Advancing Biology)", category: "Biology", conflicts: [], zab: false \},\
+            \{ name: "Business / Business Studies", category: "Business", conflicts: ["Economics"], zab: false \},\
+            \{ name: "Chemistry", category: "Chemistry", conflicts: [], zab: false \},\
+            \{ name: "Chemistry A", category: "Chemistry", conflicts: [], zab: false \},\
+            \{ name: "Chemistry B (Salters)", category: "Chemistry", conflicts: [], zab: false \},\
+            \{ name: "Chinese (spoken Mandarin/spoken Cantonese)", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Classical Civilisation/Classical Studies", category: "History-Related", conflicts: ["History", "Language"], zab: false \},\
+            \{ name: "Classical Greek", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Computer Science", category: "Informatik", conflicts: [], zab: false \},\
+            \{ name: "Design & Textiles", category: "Vocational-Design", conflicts: [], zab: false, notes: "Focus options include: Design Engineering, Fashion and Textiles, and Product Design[cite: 5]." \},\
+            \{ name: "Design and Technology / Technology and Design", category: "Vocational-Design", conflicts: [], zab: false \},\
+            \{ name: "Digital Media & Design", category: "ZAB-Field", conflicts: [], zab: true \},\
+            \{ name: "Digital Technology", category: "ZAB-Field", conflicts: [], zab: true \},\
+            \{ name: "Drama and Theatre", category: "Drama", conflicts: [], zab: false \},\
+            \{ name: "Economics", category: "Economics", conflicts: ["Business"], zab: false \},\
+            \{ name: "Economics A", category: "Economics", conflicts: ["Business"], zab: false \},\
+            \{ name: "Economics B", category: "Economics", conflicts: ["Business"], zab: false \},\
+            \{ name: "Electronics", category: "Electronics", conflicts: ["Physics"], zab: false \},\
+            \{ name: "English Language", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "English Language and Literature", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "English Language and Literature (EMC)", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "English Literature", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "English Literature A", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "English Literature B", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Environmental Science", category: "Env-Sci", conflicts: ["Biology", "Chemistry", "Physics"], zab: false \},\
+            \{ name: "Environmental Technology", category: "ZAB-Field", conflicts: [], zab: true \},\
+            \{ name: "Film Studies", category: "Film", conflicts: [], zab: false \},\
+            \{ name: "French", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Further Mathematics", category: "Mathematics", conflicts: [], zab: false \},\
+            \{ name: "Further Mathematics A", category: "Mathematics", conflicts: [], zab: false \},\
+            \{ name: "Further Mathematics B (MEI)", category: "Mathematics", conflicts: [], zab: false \},\
+            \{ name: "Geography", category: "Geography", conflicts: [], zab: false \},\
+            \{ name: "Geology", category: "Geology", conflicts: ["Geography"], zab: false \},\
+            \{ name: "German", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Government and Politics", category: "Politics", conflicts: [], zab: false \},\
+            \{ name: "Greek", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Gujarati", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Health and Social Care", category: "ZAB-Field", conflicts: [], zab: true \},\
+            \{ name: "Hindi", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "History", category: "History", conflicts: [], zab: false \},\
+            \{ name: "History A", category: "History", conflicts: [], zab: false \},\
+            \{ name: "History of Art", category: "History-Related", conflicts: ["History"], zab: false \},\
+            \{ name: "Information and Communication Technology (ICT)", category: "Informatik", conflicts: [], zab: false \},\
+            \{ name: "Information Technology", category: "Informatik", conflicts: [], zab: false \},\
+            \{ name: "Irish", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Italian", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Japanese", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Journalism in the Media and Communications Industry", category: "ZAB-Field", conflicts: ["Language"], zab: true \},\
+            \{ name: "Latin", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Law", category: "Law", conflicts: ["History", "Politics", "Sociology", "Government and Politics"], zab: false \},\
+            \{ name: "Life and Health Sciences", category: "Interdisciplinary", conflicts: ["Biology", "Chemistry"], zab: false \},\
+            \{ name: "Marine Science (Cambridge)", category: "Interdisciplinary", conflicts: ["Biology", "Chemistry", "Physics"], zab: false \},\
+            \{ name: "Mathematics", category: "Mathematics", conflicts: [], zab: false \},\
+            \{ name: "Mathematics A", category: "Mathematics", conflicts: [], zab: false \},\
+            \{ name: "Mathematics B (MEI)", category: "Mathematics", conflicts: [], zab: false \},\
+            \{ name: "Media Studies", category: "ZAB-Field", conflicts: [], zab: true \},\
+            \{ name: "Modern Hebrew", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Music", category: "Music", conflicts: [], zab: false \},\
+            \{ name: "Music Technology", category: "Music-Tech", conflicts: [], zab: false \},\
+            \{ name: "Nutrition and Food Science", category: "Nutrition", conflicts: ["Biology", "Chemistry"], zab: false \},\
+            \{ name: "Panjabi", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Persian", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Philosophy", category: "Philosophy", conflicts: [], zab: false \},\
+            \{ name: "Physical Education", category: "PE", conflicts: [], zab: false \},\
+            \{ name: "Physics", category: "Physics", conflicts: [], zab: false \},\
+            \{ name: "Physics A", category: "Physics", conflicts: [], zab: false \},\
+            \{ name: "Physics B (Advancing Physics)", category: "Physics", conflicts: [], zab: false \},\
+            \{ name: "Polish", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Politics", category: "Politics", conflicts: [], zab: false \},\
+            \{ name: "Portuguese", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Psychology", category: "Psychology", conflicts: [], zab: false \},\
+            \{ name: "Pure Mathematics", category: "Mathematics", conflicts: [], zab: false \},\
+            \{ name: "Religious Studies", category: "Religion", conflicts: [], zab: false \},\
+            \{ name: "Russian", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Sociology", category: "Politics", conflicts: [], zab: false \},\
+            \{ name: "Software Systems Development", category: "Software-Dev", conflicts: ["Informatik"], zab: false \},\
+            \{ name: "Spanish", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Sports Science and the Active Leisure Industry", category: "Sports-Sci", conflicts: [], zab: false \},\
+            \{ name: "Statistics", category: "Stats", conflicts: ["Mathematics"], zab: false \},\
+            \{ name: "Tamil", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Travel & Tourism", category: "Travel", conflicts: ["Economics", "Geography"], zab: false \},\
+            \{ name: "Turkish", category: "Language", conflicts: [], zab: false \},\
+            \{ name: "Urdu", category: "Language", conflicts: [], zab: false \}\
+        ];\
+\
+        const rejectionMessage = "Sorry you are not eligible for any Anabin regulation following university. This also includes all universities that partially (VPD procedure) or completely (direct application) utilise uni-assist for their application, since uni-assist also follows Anabin regulation.";\
+\
+        // Initialize lists and layout items on page load\
+        window.onload = function() \{\
+            populateDropdowns();\
+        \};\
+\
+        function populateDropdowns() \{\
+            const dropdowns = [document.getElementById('sub1'), document.getElementById('sub2'), document.getElementById('sub3')];\
+            \
+            dropdowns.forEach(dropdown => \{\
+                dropdown.innerHTML = '<option value="">-- Choose a Subject --</option>';\
+                subjectDatabase.forEach(sub => \{\
+                    const opt = document.createElement('option');\
+                    opt.value = sub.name;\
+                    opt.textContent = sub.name;\
+                    dropdown.appendChild(opt);\
+                \});\
+            \});\
+        \}\
+\
+        function nextStep(stepNumber) \{\
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));\
+            document.getElementById(`step-$\{stepNumber\}`).classList.add('active');\
+        \}\
+\
+        function showRejection() \{\
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));\
+            const resDisplay = document.getElementById('result-display');\
+            const resText = document.getElementById('result-text');\
+            \
+            resText.className = "result-box error";\
+            resText.textContent = rejectionMessage;\
+            document.getElementById('additional-notes').innerHTML = "";\
+            resDisplay.style.display = 'block';\
+        \}\
+\
+        function evaluateSubjects() \{\
+            const s1Name = document.getElementById('sub1').value;\
+            const s2Name = document.getElementById('sub2').value;\
+            const s3Name = document.getElementById('sub3').value;\
+\
+            // Integrity check: make sure 3 subjects are picked and are completely unique\
+            if (!s1Name || !s2Name || !s3Name) \{\
+                alert("Please select all three subjects.");\
+                return;\
+            \}\
+            if (s1Name === s2Name || s1Name === s3Name || s2Name === s3Name) \{\
+                alert("Please select three completely different subjects.");\
+                return;\
+            \}\
+\
+            const sub1 = subjectDatabase.find(s => s.name === s1Name);\
+            const sub2 = subjectDatabase.find(s => s.name === s2Name);\
+            const sub3 = subjectDatabase.find(s => s.name === s3Name);\
+\
+            const selected = [sub1, sub2, sub3];\
+\
+            // 1. Accounting check\
+            if (selected.some(s => s.category === "Invalid")) \{\
+                showRejection();\
+                return;\
+            \}\
+\
+            // 2. Overlap / Independence evaluation logic\
+            let isIndependent = true;\
+            \
+            for (let i = 0; i < selected.length; i++) \{\
+                for (let j = 0; j < selected.length; j++) \{\
+                    if (i === j) continue;\
+                    \
+                    // Same general category check (Languages are naturally allowed exceptions)\
+                    if (selected[i].category === selected[j].category && selected[i].category !== "Language") \{\
+                        isIndependent = false;\
+                    \}\
+                    // Cross reference direct structural conflicts (Left list vs Right list cross matches)\
+                    if (selected[i].conflicts.includes(selected[j].category) || selected[i].conflicts.includes(selected[j].name)) \{\
+                        isIndependent = false;\
+                    \}\
+                \}\
+            \}\
+\
+            if (!isIndependent) \{\
+                showRejection();\
+                return;\
+            \}\
+\
+            // 3. Evaluation complete passed independence rules. Determine final status\
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));\
+            const resDisplay = document.getElementById('result-display');\
+            const resText = document.getElementById('result-text');\
+            const notesDiv = document.getElementById('additional-notes');\
+            notesDiv.innerHTML = "";\
+\
+            // Check if any selected subject mandates a ZAB consultation workflow\
+            const requiresZAB = selected.some(s => s.zab === true);\
+\
+            if (requiresZAB) \{\
+                resText.className = "result-box warning";\
+                resText.textContent = "YOUR ELIGIBILITY IS POSSIBLE ONLY AFTER CONSULTATION WITH ZAB.";\
+            \} else \{\
+                resText.className = "result-box success";\
+                resText.textContent = "Congratulations! Based on your responses, you meet the standard structural eligibility framework rules.";\
+            \}\
+\
+            // Print special content annotations if matching custom indices exist\
+            selected.forEach(s => \{\
+                if (s.notes) \{\
+                    const block = document.createElement('div');\
+                    block.className = "note-block";\
+                    block.innerHTML = `<strong>Note on $\{s.name\}:</strong> $\{s.notes\}`;\
+                    notesDiv.appendChild(block);\
+                \}\
+            \});\
+\
+            resDisplay.style.display = 'block';\
+        \}\
+\
+        function resetWizard() \{\
+            document.getElementById('result-display').style.display = 'none';\
+            document.getElementById('sub1').value = "";\
+            document.getElementById('sub2').value = "";\
+            document.getElementById('sub3').value = "";\
+            nextStep(1);\
+        \}\
+    </script>\
+</body>\
+</html>}
