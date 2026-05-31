@@ -6,15 +6,20 @@
     <title>Eligibility checker of anabin regulation for A-levels students</title>
     <style>
         :root {
-            /* Softer, calmer color palette */
             --ios-blue: #0a84ff;
-            --ios-blue-hover: #0070e6;
+            --ios-blue-glow: rgba(10, 132, 255, 0.6);
             --ios-red: #ff453a;
-            --text-main: #2d2d2d;
+            --text-dark: #1d1d1f;
             --text-muted: #6e6e73;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            /* Light theme cards on a dark background */
+            --glass-card-bg: rgba(255, 255, 255, 0.85);
+            --glass-card-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            
+            /* Watery Button Variables */
+            --water-btn-bg: rgba(255, 255, 255, 0.4);
+            --water-btn-border: rgba(255, 255, 255, 0.7);
+            --water-btn-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3), 0 8px 32px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -25,18 +30,12 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Very soft, minimal animated background */
-        @keyframes subtleGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* Deep Dark Background */
         body {
-            background: linear-gradient(-45deg, #fdfbfb, #f0f2f5, #f5f7fa, #ffffff);
-            background-size: 400% 400%;
-            animation: subtleGradient 15s ease infinite;
-            color: var(--text-main);
+            background: #000000;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #000000 80%);
+            background-attachment: fixed;
+            color: var(--text-dark);
             line-height: 1.6;
             padding: 20px;
             display: flex;
@@ -49,73 +48,81 @@
             width: 100%;
             margin: 0 auto;
             flex: 1;
-            padding-bottom: 40px;
+            padding-bottom: 50px;
         }
 
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px 0;
+            padding: 30px 0 10px 0;
         }
 
         header h1 {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #1d1d1f;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.5px;
         }
 
-        /* Flowchart Nodes */
+        /* Light Guidance Flow Nodes */
         .flow-node {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            background: var(--glass-card-bg);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid var(--glass-card-border);
+            border-radius: 28px;
             box-shadow: var(--glass-shadow);
-            padding: 35px;
-            display: none; /* Hidden by default */
+            padding: 40px;
+            display: none;
             opacity: 0;
             transform: translateY(-20px);
+            position: relative;
+            z-index: 2;
         }
 
-        /* Tree Branch Animation */
         .flow-node.active {
             display: block;
-            animation: flowDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: flowDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes flowDown {
-            to { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Vertical Connector Lines */
+        /* Glowing Light Branch Connectors */
         .connector {
-            width: 3px;
-            height: 40px;
-            background: var(--ios-blue);
+            width: 4px;
+            height: 50px;
             margin: 0 auto;
             opacity: 0;
             display: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #00f2fe 50%, #4facfe 100%);
+            box-shadow: 0 0 15px #00f2fe, 0 0 30px #4facfe;
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
         }
 
         .connector.active {
             display: block;
-            animation: drawLine 0.5s ease forwards;
+            animation: drawLightBeam 0.6s ease forwards;
         }
 
-        @keyframes drawLine {
-            from { height: 0; opacity: 0; }
-            to { height: 40px; opacity: 0.3; }
+        @keyframes drawLightBeam {
+            0% { height: 0; opacity: 0; }
+            100% { height: 50px; opacity: 1; }
         }
 
         h2 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 15px;
             font-weight: 700;
-            color: #1d1d1f;
+            color: #000000;
         }
 
-        /* Buttons that act like flowchart selectors */
+        /* iOS Watery Transparency Buttons */
         .btn-group {
             display: flex;
             gap: 15px;
@@ -123,56 +130,66 @@
         }
 
         button {
-            padding: 16px 24px;
-            border: 2px solid #e5e5ea;
-            border-radius: 16px;
+            padding: 18px 24px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 1.05rem;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             flex: 1;
-            background: #ffffff;
-            color: var(--text-main);
+            
+            /* Watery Glass Effect */
+            background: var(--water-btn-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--water-btn-border);
+            box-shadow: var(--water-btn-shadow);
+            color: var(--text-dark);
         }
 
         button:hover:not(.dimmed):not(.selected) {
-            border-color: var(--ios-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(10, 132, 255, 0.15);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.5), 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
-        /* Selected state locks it in visually */
+        /* Selected State: Solid Glowing Liquid */
         button.selected {
-            background: var(--ios-blue);
+            background: rgba(10, 132, 255, 0.85);
             color: white;
-            border-color: var(--ios-blue);
-            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 25px var(--ios-blue-glow), inset 0 0 15px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Dimming unselected options creates the "path" feel */
         button.dimmed {
-            opacity: 0.4;
+            opacity: 0.35;
             background: transparent;
             pointer-events: none;
-            border-color: transparent;
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: none;
         }
 
         button.btn-submit {
-            background: var(--ios-blue);
+            background: rgba(10, 132, 255, 0.85);
             color: white;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px var(--ios-blue-glow);
         }
+        
         button.btn-submit:hover {
-            background: var(--ios-blue-hover);
+            background: rgba(10, 132, 255, 1);
+            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.8);
         }
 
+        /* Watery Dropdowns */
         .form-group {
             margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
             font-size: 0.9rem;
             color: var(--text-muted);
@@ -183,14 +200,20 @@
         select {
             width: 100%;
             padding: 16px;
-            border: 2px solid #e5e5ea;
-            border-radius: 14px;
+            border-radius: 16px;
             font-size: 1.05rem;
-            background-color: #ffffff;
-            color: var(--text-main);
+            color: var(--text-dark);
             outline: none;
             cursor: pointer;
             appearance: none;
+            
+            /* Watery Glass Effect for Select */
+            background-color: var(--water-btn-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--water-btn-border);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+            
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2386868b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
             background-position: right 15px top 50%;
@@ -199,41 +222,44 @@
         }
 
         select:focus {
+            background-color: rgba(255, 255, 255, 0.7);
             border-color: var(--ios-blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
         }
 
         .result-box {
             padding: 25px;
-            border-radius: 16px;
+            border-radius: 18px;
             margin-bottom: 20px;
             font-weight: 700;
             font-size: 1.2rem;
             text-align: center;
+            backdrop-filter: blur(10px);
         }
 
         .result-box.error {
-            background-color: #ffeceb;
-            color: var(--ios-red);
-            border: 1px solid #ffc1be;
+            background-color: rgba(255, 69, 58, 0.15);
+            color: #d93025;
+            border: 1px solid rgba(255, 69, 58, 0.3);
         }
 
         .result-box.success {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
+            background-color: rgba(48, 209, 88, 0.15);
+            color: #1a7d2e;
+            border: 1px solid rgba(48, 209, 88, 0.3);
         }
 
         .result-box.warning {
-            background-color: #fff3e0;
-            color: #ef6c00;
-            border: 1px solid #ffe0b2;
+            background-color: rgba(255, 159, 10, 0.15);
+            color: #b35900;
+            border: 1px solid rgba(255, 159, 10, 0.3);
         }
 
         .reasoning-box {
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.02);
-            border-radius: 14px;
-            border: 1px solid #e5e5ea;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .reasoning-box h4 {
@@ -247,16 +273,16 @@
         .note-block {
             margin-top: 15px;
             font-size: 0.95rem;
-            background: #fff8e1;
+            background: rgba(255, 204, 0, 0.15);
             padding: 15px 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             color: #8f6b00;
-            border: 1px solid #ffecb3;
+            border: 1px solid rgba(255, 204, 0, 0.3);
         }
 
         .specs-container {
             margin-top: 35px;
-            border-top: 1px solid #e5e5ea;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             padding-top: 25px;
         }
 
@@ -267,11 +293,11 @@
         }
 
         .specs-notice {
-            background-color: #e1f5fe;
+            background-color: rgba(90, 200, 250, 0.15);
             padding: 20px;
-            border-radius: 14px;
+            border-radius: 16px;
             font-size: 0.95rem;
-            color: #0277bd;
+            color: #005e82;
             margin-bottom: 25px;
             text-align: justify;
         }
@@ -280,36 +306,36 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
-            border: 1px solid #e5e5ea;
-            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .specs-table th, .specs-table td {
             padding: 16px;
             text-align: left;
-            border-bottom: 1px solid #e5e5ea;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             font-size: 0.95rem;
         }
 
         .specs-table th {
-            background-color: #f9f9f9;
+            background-color: rgba(0, 0, 0, 0.03);
             font-weight: 700;
         }
 
         .specs-table tr:last-child td { border-bottom: none; }
 
         .verify-box {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.6);
             padding: 25px;
-            border-radius: 16px;
+            border-radius: 20px;
             margin-top: 30px;
-            border: 1px solid #e5e5ea;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .verify-box h3 { font-size: 1.05rem; margin-bottom: 10px; }
-        .verify-box p { font-size: 0.95rem; margin-bottom: 15px; color: var(--text-muted); }
+        .verify-box p { font-size: 0.95rem; margin-bottom: 15px; color: var(--text-muted); text-align: justify; }
         .verify-box a { color: var(--ios-blue); text-decoration: none; font-weight: 600; }
         .verify-box a:hover { text-decoration: underline; }
 
@@ -322,16 +348,18 @@
             cursor: pointer;
             text-decoration: underline;
             font-size: 0.95rem;
+            transition: color 0.2s;
         }
-        .reset-link:hover { color: var(--text-main); }
+        .reset-link:hover { color: var(--ios-blue); }
 
         footer {
-            margin-top: 30px;
+            margin-top: 10px;
             text-align: justify;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+            font-size: 0.95rem;
+            color: var(--text-dark);
         }
-        footer h3 { font-size: 1rem; margin-bottom: 8px; color: var(--text-main); }
+        footer h3 { font-size: 1.1rem; margin-bottom: 12px; color: #000000; }
+        footer p { margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -341,7 +369,7 @@
             <h1>Eligibility checker of anabin regulation for A-levels students</h1>
         </header>
 
-        <!-- Grade Node (Starting Point) -->
+        <!-- Grade Node -->
         <div id="node-grade" class="flow-node active">
             <h2>Grade Requirement</h2>
             <p style="font-size: 1.1rem; color: #444;">Have you at least obtained 3 C's or better in your subjects?</p>
@@ -443,10 +471,11 @@
             <span class="reset-link" onclick="resetWizard()">Start a new analysis</span>
         </div>
 
-        <div class="flow-node active" style="margin-top: 30px; background: transparent; box-shadow: none; border: none; padding: 0;">
+        <div class="flow-node active" style="margin-top: 30px; border-radius: 28px;">
             <footer>
                 <h3>Important Disclaimer</h3>
                 <p>It is still highly advised to check all entry requirements with your chosen university before submitting an application. This tool provides information for guidance only, as each university retains the right to set its own specific entry requirements, including subject choices, combinations, and language prerequisites, within the broader recommendations of the Central Office for Foreign Education. As a best practice, if you are not absolutely sure about your eligibility, please contact your university's admissions office, use the uni-assist contact form available on their website, reach out via the contact information provided by Anabin, or consult any other concerned authority involved in your admission process.</p>
+                <p>Even if you are ineligible according to the Anabin regulations criteria, there are still public universities that remain an option for you. These universities do not follow Anabin regulations and have their own specific criteria; however, they are extremely rare. The majority of the time, universities will mention Anabin as the criteria used for international students, or they will simply utilize uni-assist partially or completely, which also strictly adheres to Anabin criteria. When shortlisting a university that neither mentions nor follows Anabin regulations, and does not use uni-assist at all, one approach is to email the university's admissions office with your academic profile to ask for a pre-check. Alternatively, you can simply apply if the application for the program does not cost any money and hope for the best. One example of such a university is the Deggendorf Institute of Technology (DIT).</p>
             </footer>
         </div>
     </div>
@@ -572,11 +601,10 @@
             const btnYes = document.getElementById('btn-grade-yes');
             const btnNo = document.getElementById('btn-grade-no');
 
-            // Reset any previous selections visually
+            // Reset visual states
             btnYes.className = "";
             btnNo.className = "";
 
-            // Hide everything below if re-clicking
             document.getElementById('conn-subjects').classList.remove('active');
             document.getElementById('node-result').classList.remove('active');
 
@@ -584,19 +612,17 @@
                 btnYes.classList.add('selected');
                 btnNo.classList.add('dimmed');
                 
-                document.getElementById('node-subjects').classList.remove('active'); // reset animation
-                void document.getElementById('node-subjects').offsetWidth; // trigger reflow
+                document.getElementById('node-subjects').classList.remove('active');
+                void document.getElementById('node-subjects').offsetWidth;
                 
                 document.getElementById('conn-grade').classList.add('active');
                 document.getElementById('node-subjects').classList.add('active');
                 
-                // Scroll down smoothly
                 setTimeout(() => { document.getElementById('node-subjects').scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
             } else {
                 btnNo.classList.add('selected');
                 btnYes.classList.add('dimmed');
                 
-                // Hide the middle subject node completely
                 document.getElementById('node-subjects').classList.remove('active');
                 
                 document.getElementById('conn-grade').classList.add('active');
@@ -677,7 +703,6 @@
             const reasonText = document.getElementById('reasoning-text');
             const notesDiv = document.getElementById('additional-notes');
             
-            // Reset Node for animation
             resNode.classList.remove('active');
             void resNode.offsetWidth;
 
@@ -716,7 +741,6 @@
         }
 
         function resetWizard() {
-            // Un-dim buttons
             document.getElementById('btn-grade-yes').className = "";
             document.getElementById('btn-grade-no').className = "";
             
@@ -724,18 +748,15 @@
             btnEval.className = "btn-submit";
             btnEval.innerHTML = "Check Eligibility";
 
-            // Hide connectors and bottom nodes
             document.getElementById('conn-grade').classList.remove('active');
             document.getElementById('conn-subjects').classList.remove('active');
             document.getElementById('node-subjects').classList.remove('active');
             document.getElementById('node-result').classList.remove('active');
 
-            // Reset dropdowns
             document.getElementById('sub1').value = "";
             document.getElementById('sub2').value = "";
             document.getElementById('sub3').value = "";
 
-            // Scroll back to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
