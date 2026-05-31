@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>German University Eligibility Checker (A-Levels)</title>
+    <title>Eligibility checker of anabin regulation for A-levels students</title>
     <style>
         :root {
             --primary-color: #0b3c5d;
@@ -14,6 +14,7 @@
             --text-color: #333333;
             --bg-color: #f4f7f6;
             --card-bg: #ffffff;
+            --border-color: #e2e8f0;
         }
 
         * {
@@ -34,7 +35,7 @@
         }
 
         .container {
-            max-width: 750px;
+            max-width: 800px;
             width: 100%;
             margin: 0 auto;
             flex: 1;
@@ -49,13 +50,8 @@
 
         header h1 {
             color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #666;
-            font-size: 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
         }
 
         .card {
@@ -64,7 +60,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             margin-bottom: 30px;
-            transition: all 0.3s ease;
         }
 
         .step {
@@ -73,6 +68,12 @@
 
         .step.active {
             display: block;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
         }
 
         .btn-group {
@@ -102,12 +103,12 @@
         }
 
         button.btn-no {
-            background-color: #e0e0e0;
+            background-color: #e2e8f0;
             color: #333;
         }
 
         button.btn-no:hover {
-            background-color: #d0d0d0;
+            background-color: #cbd5e1;
         }
 
         button.btn-submit {
@@ -148,7 +149,8 @@
             padding: 20px;
             border-radius: 5px;
             margin-top: 20px;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .result-box.error {
@@ -169,13 +171,105 @@
             color: #8a6d3b;
         }
 
+        .reasoning-box {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+
+        .reasoning-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
         .note-block {
             margin-top: 15px;
             font-size: 0.95rem;
-            background: #f9f9f9;
+            background: #fffbeb;
             padding: 15px;
             border-radius: 4px;
-            border: 1px solid #eee;
+            border: 1px solid #fef3c7;
+            color: #92400e;
+        }
+
+        /* Subject Specific Requirements Table Styling */
+        .specs-container {
+            margin-top: 30px;
+            border-top: 2px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .specs-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .specs-notice {
+            background-color: #f0fdfa;
+            border-left: 4px solid #0d9488;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #115e59;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .specs-table th, .specs-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .specs-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .specs-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .verify-box {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .verify-box h3 {
+            color: var(--primary-color);
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .verify-box p {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #475569;
+        }
+
+        .verify-box a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .verify-box a:hover {
+            text-decoration: underline;
         }
 
         footer {
@@ -185,7 +279,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             font-size: 0.9rem;
-            border-top: 4px solid #ddd;
+            border-top: 4px solid #cbd5e1;
         }
 
         footer h3 {
@@ -195,26 +289,19 @@
         }
 
         footer p {
-            margin-bottom: 15px;
             color: #555;
             text-align: justify;
         }
 
-        footer a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
         .reset-btn {
-            background-color: #666;
+            background-color: #64748b;
             color: white;
-            margin-top: 20px;
+            margin-top: 25px;
             max-width: 200px;
+        }
+
+        .reset-btn:hover {
+            background-color: #475569;
         }
     </style>
 </head>
@@ -222,35 +309,34 @@
 
     <div class="container">
         <header>
-            <h1>German University Eligibility Checker</h1>
-            <p>An unofficial guide for A-Level students matching KMK & Anabin regulations</p>
+            <h1>Eligibility checker of anabin regulation for A-levels students</h1>
         </header>
 
         <div class="card">
             <!-- Step 1: Volume Check -->
             <div id="step-1" class="step active">
                 <h2>Question 1</h2>
-                <p style="margin-top: 10px; font-size: 1.1rem;">Have you or will you have studied 3 full Advanced Level subjects in A Levels?</p>
+                <p style="font-size: 1.1rem;">Have you or will you have studied 3 full Advanced Level subjects in A Levels?</p>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(2)">Yes</button>
-                    <button class="btn-no" onclick="showRejection()">No</button>
+                    <button class="btn-no" onclick="failStep('step1')">No</button>
                 </div>
             </div>
 
             <!-- Step 2: Grade Check -->
             <div id="step-2" class="step">
                 <h2>Question 2</h2>
-                <p style="margin-top: 10px; font-size: 1.1rem;">Have you at least obtained 3 C's or better in your subjects?</p>
+                <p style="font-size: 1.1rem;">Have you at least obtained 3 C's or better in your subjects?</p>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(3)">Yes</button>
-                    <button class="btn-no" onclick="showRejection()">No</button>
+                    <button class="btn-no" onclick="failStep('step2')">No</button>
                 </div>
             </div>
 
             <!-- Step 3: Subject Configuration -->
             <div id="step-3" class="step">
                 <h2>Subject Selection</h2>
-                <p style="margin-bottom: 20px; color: #666;">Please select your 3 full A-Level subjects below to analyze independence rules and specific notes.</p>
+                <p style="margin-bottom: 20px; color: #666;">Please select your three full A-Level subjects below to analyze structural independence rules.</p>
                 
                 <div class="form-group">
                     <label for="sub1">Subject 1</label>
@@ -270,32 +356,88 @@
                 </div>
             </div>
 
-            <!-- Results Output -->
+            <!-- Results Output Area -->
             <div id="result-display" style="display: none;">
                 <div id="result-text" class="result-box"></div>
+                
+                <!-- Dynamic Rule Explanation Box -->
+                <div class="reasoning-box">
+                    <h4>Evaluation Ruling Explanation:</h4>
+                    <p id="reasoning-text"></p>
+                </div>
+
                 <div id="additional-notes"></div>
+
+                <!-- Subject-Specific Requirements Panel (Unlocks post-evaluation) -->
+                <div id="subject-specific-specs" class="specs-container" style="display: none;">
+                    <div class="specs-title">2. Subject-Specific Requirements (Fachspezifische Anforderungen)</div>
+                    <div class="specs-notice">
+                        You need to determine your subject-specific eligibility from this matrix as well. Absolute confirmation of your intended program to be studied at a university following within a specific subject zone (for example, whether studying the program "International Engineering" at an XYZ public university following Anabin regulations falls under Mathematical or Technical, or under Natural Sciences specialization) can only be estimated or inquired directly at the university, uni-assist, or Anabin. In short, you need to be generally eligible (3 C's in three independent subjects) and subject-specific eligible as well in addition to the general eligibility.
+                    </div>
+                    <table class="specs-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Field of Study</th>
+                                <th style="width: 60%;">Specific A-Level Subject Requirements</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Artistic Programs</strong></td>
+                                <td>No subject-specific requirements.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Humanities and Law Programs</strong></td>
+                                <td>1 A Level from: Language, History, Geography, Social Studies/Politics, Economics.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Social and Economic Sciences Programs</strong></td>
+                                <td>1 A Level from: History, Geography, Social Studies/Politics, Economics; AND<br>1 A Level from: Mathematics, Biology, Chemistry, Physics, Computer Science.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Natural Sciences Programs</strong></td>
+                                <td>2 A Levels from: Mathematics, Biology, Chemistry, Physics, Computer Science.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mathematical and Technical Programs</strong></td>
+                                <td>1 A Level in Mathematics; AND<br>1 A Level from: Biology, Chemistry, Physics, Computer Science.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Medical Programs, including Pharmacy</strong></td>
+                                <td>3 A Levels from: Mathematics, Biology, Chemistry, Physics, Computer Science.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Programs that cannot be assigned to these fields</strong></td>
+                                <td>The admitting university decides on subject-specific requirements.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Manual Verification Box (Appears at the end of a decision block) -->
+                <div class="verify-box">
+                    <h3>Verify Your Eligibility Manually</h3>
+                    <p>You can determine your eligibility yourself by visiting the following website: <a href="https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#" target="_blank">https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#</a> and selecting 'Großbritannien', followed by 'International Advanced Level'.</p>
+                    <p>Alternatively, if the link is invalid or fails to open, you can go directly to the Anabin homepage. Navigate to the 'Schulabschlüsse mit Hochschulzugang' (School leaving certificates with university entrance qualifications) section, select 'Großbritannien', and then choose 'International Advanced Level'.</p>
+                </div>
+
                 <button class="reset-btn" onclick="resetWizard()">Start Over</button>
             </div>
         </div>
 
         <footer>
-            <h3>Verify Your Eligibility Manually</h3>
-            <p>You can determine your eligibility yourself by visiting the following website: <a href="https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#" target="_blank">https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#</a> and selecting 'Großbritannien', followed by 'International Advanced Level'.</p>
-            <p>Alternatively, if the link is invalid or fails to open, you can go directly to the Anabin homepage. Navigate to the 'Schulabschlüsse mit Hochschulzugang' (School leaving certificates with university entrance qualifications) section, select 'Großbritannien', and then choose 'International Advanced Level'.</p>
-            
             <h3>Important Disclaimer</h3>
-            <p>It is still highly advised to check all entry requirements with your chosen university before submitting an application[cite: 1]. This tool provides information for guidance only, as each university retains the right to set its own specific entry requirements, including subject choices, combinations, and language prerequisites, within the broader recommendations of the Central Office for Foreign Education[cite: 1].</p>
-            <p>As a best practice, if you are not absolutely sure about your eligibility, please contact your university's admissions office, use the uni-assist contact form available on their website, reach out via the contact information provided by Anabin, or consult any other concerned authority involved in your admission process.</p>
+            <p>It is still highly advised to check all entry requirements with your chosen university before submitting an application. This tool provides information for guidance only, as each university retains the right to set its own specific entry requirements, including subject choices, combinations, and language prerequisites, within the broader recommendations of the Central Office for Foreign Education. As a best practice, if you are not absolutely sure about your eligibility, please contact your university's admissions office, use the uni-assist contact form available on their website, reach out via the contact information provided by Anabin, or consult any other concerned authority involved in your admission process.</p>
         </footer>
     </div>
 
     <script>
-        // Comprehensive master list of subjects gathered from Anabin List A, B, and C
+        // Master dataset mapping items safely without string citation artifacts
         const subjectDatabase = [
             { name: "Accounting", category: "Invalid", conflicts: [], zab: false, notes: "Accounting is not considered a valid academic subject for university admission framework requirements in Germany." },
             { name: "Ancient History", category: "History-Related", conflicts: ["History"], zab: false },
             { name: "Arabic (listening reading and writing)", category: "Language", conflicts: [], zab: false },
-            { name: "Art and Design", category: "Art", conflicts: [], zab: false, notes: "Valid focus areas include: Craft and Design, Fine Art, Graphic Communication, Photography, Textile Design, Three-Dimensional Design, and Critical and Contextual Studies[cite: 4]." },
+            { name: "Art and Design", category: "Art", conflicts: [], zab: false, notes: "Valid focus areas include: Craft and Design, Fine Art, Graphic Communication, Photography, Textile Design, Three-Dimensional Design, and Critical and Contextual Studies." },
             { name: "Bengali", category: "Language", conflicts: [], zab: false },
             { name: "Biblical Hebrew", category: "Language", conflicts: [], zab: false },
             { name: "Biology", category: "Biology", conflicts: [], zab: false },
@@ -311,7 +453,7 @@
             { name: "Classical Civilisation/Classical Studies", category: "History-Related", conflicts: ["History", "Language"], zab: false },
             { name: "Classical Greek", category: "Language", conflicts: [], zab: false },
             { name: "Computer Science", category: "Informatik", conflicts: [], zab: false },
-            { name: "Design & Textiles", category: "Vocational-Design", conflicts: [], zab: false, notes: "Focus options include: Design Engineering, Fashion and Textiles, and Product Design[cite: 5]." },
+            { name: "Design & Textiles", category: "Vocational-Design", conflicts: [], zab: false, notes: "Focus options include: Design Engineering, Fashion and Textiles, and Product Design." },
             { name: "Design and Technology / Technology and Design", category: "Vocational-Design", conflicts: [], zab: false },
             { name: "Digital Media & Design", category: "ZAB-Field", conflicts: [], zab: true },
             { name: "Digital Technology", category: "ZAB-Field", conflicts: [], zab: true },
@@ -389,17 +531,15 @@
 
         const rejectionMessage = "Sorry you are not eligible for any Anabin regulation following university. This also includes all universities that partially (VPD procedure) or completely (direct application) utilise uni-assist for their application, since uni-assist also follows Anabin regulation.";
 
-        // Initialize lists and layout items on page load
         window.onload = function() {
             populateDropdowns();
         };
 
         function populateDropdowns() {
             const dropdowns = [document.getElementById('sub1'), document.getElementById('sub2'), document.getElementById('sub3')];
-            
             dropdowns.forEach(dropdown => {
                 dropdown.innerHTML = '<option value="">-- Choose a Subject --</option>';
-                subjectDatabase.forEach(sub => {
+                subjectDatabase.sort((a, b) => a.name.localeCompare(b.name)).forEach(sub => {
                     const opt = document.createElement('option');
                     opt.value = sub.name;
                     opt.textContent = sub.name;
@@ -413,14 +553,23 @@
             document.getElementById(`step-${stepNumber}`).classList.add('active');
         }
 
-        function showRejection() {
+        function failStep(context) {
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
             const resDisplay = document.getElementById('result-display');
             const resText = document.getElementById('result-text');
+            const reasonText = document.getElementById('reasoning-text');
             
             resText.className = "result-box error";
             resText.textContent = rejectionMessage;
+
+            if (context === 'step1') {
+                reasonText.textContent = "Ineligibility triggered at Step 1: The user has not studied or will not have studied a minimum total volume of 3 full Advanced Level subjects.";
+            } else if (context === 'step2') {
+                reasonText.textContent = "Ineligibility triggered at Step 2: The user has not obtained a minimum grade of C or better across their three full A-Level subjects.";
+            }
+
             document.getElementById('additional-notes').innerHTML = "";
+            document.getElementById('subject-specific-specs').style.display = 'none';
             resDisplay.style.display = 'block';
         }
 
@@ -429,70 +578,92 @@
             const s2Name = document.getElementById('sub2').value;
             const s3Name = document.getElementById('sub3').value;
 
-            // Integrity check: make sure 3 subjects are picked and are completely unique
             if (!s1Name || !s2Name || !s3Name) {
                 alert("Please select all three subjects.");
                 return;
             }
             if (s1Name === s2Name || s1Name === s3Name || s2Name === s3Name) {
-                alert("Please select three completely different subjects.");
+                alert("Please select three completely distinct subjects.");
                 return;
             }
 
             const sub1 = subjectDatabase.find(s => s.name === s1Name);
             const sub2 = subjectDatabase.find(s => s.name === s2Name);
             const sub3 = subjectDatabase.find(s => s.name === s3Name);
-
             const selected = [sub1, sub2, sub3];
 
-            // 1. Accounting check
-            if (selected.some(s => s.category === "Invalid")) {
-                showRejection();
-                return;
-            }
-
-            // 2. Overlap / Independence evaluation logic
-            let isIndependent = true;
-            
-            for (let i = 0; i < selected.length; i++) {
-                for (let j = 0; j < selected.length; j++) {
-                    if (i === j) continue;
-                    
-                    // Same general category check (Languages are naturally allowed exceptions)
-                    if (selected[i].category === selected[j].category && selected[i].category !== "Language") {
-                        isIndependent = false;
-                    }
-                    // Cross reference direct structural conflicts (Left list vs Right list cross matches)
-                    if (selected[i].conflicts.includes(selected[j].category) || selected[i].conflicts.includes(selected[j].name)) {
-                        isIndependent = false;
-                    }
-                }
-            }
-
-            if (!isIndependent) {
-                showRejection();
-                return;
-            }
-
-            // 3. Evaluation complete passed independence rules. Determine final status
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
             const resDisplay = document.getElementById('result-display');
             const resText = document.getElementById('result-text');
+            const reasonText = document.getElementById('reasoning-text');
             const notesDiv = document.getElementById('additional-notes');
             notesDiv.innerHTML = "";
 
-            // Check if any selected subject mandates a ZAB consultation workflow
+            // 1. Check for Invalid Academic Subjects (Accounting)
+            const invalidSub = selected.find(s => s.category === "Invalid");
+            if (invalidSub) {
+                resText.className = "result-box error";
+                resText.textContent = rejectionMessage;
+                reasonText.textContent = `Ineligibility triggered at Step 3: Your selection includes "${invalidSub.name}". ${invalidSub.notes}`;
+                document.getElementById('subject-specific-specs').style.display = 'none';
+                resDisplay.style.display = 'block';
+                return;
+            }
+
+            // 2. Structural Independence Rules Assessment
+            let conflictFound = false;
+            let conflictReason = "";
+
+            for (let i = 0; i < selected.length; i++) {
+                for (let j = i + 1; j < selected.length; j++) {
+                    const a = selected[i];
+                    const b = selected[j];
+
+                    // Category matching check (Languages are exempted)
+                    if (a.category === b.category && a.category !== "Language") {
+                        conflictFound = true;
+                        conflictReason = `Your selected subjects "${a.name}" and "${b.name}" are not independent of each other because they fall under the same subject specialization category (${a.category}).`;
+                        break;
+                    }
+
+                    // Left list cross matching cross-conflicts (e.g. Business vs Economics / Electronics vs Physics)
+                    if (a.conflicts.includes(b.category) || a.conflicts.includes(b.name)) {
+                        conflictFound = true;
+                        conflictReason = `Your selected subjects "${a.name}" and "${b.name}" are not independent of each other according to the structural exclusion parameters of the Anabin database matrix.`;
+                        break;
+                    }
+                    if (b.conflicts.includes(a.category) || b.conflicts.includes(a.name)) {
+                        conflictFound = true;
+                        conflictReason = `Your selected subjects "${b.name}" and "${a.name}" are not independent of each other according to the structural exclusion parameters of the Anabin database matrix.`;
+                        break;
+                    }
+                }
+                if (conflictFound) break;
+            }
+
+            if (conflictFound) {
+                resText.className = "result-box error";
+                resText.textContent = rejectionMessage;
+                reasonText.textContent = `Ineligibility triggered at Step 3 (Independence Check): ${conflictReason}`;
+                document.getElementById('subject-specific-specs').style.display = 'none';
+                resDisplay.style.display = 'block';
+                return;
+            }
+
+            // 3. Status determination (ZAB consultation vs Standard General Admission)
             const requiresZAB = selected.some(s => s.zab === true);
 
             if (requiresZAB) {
                 resText.className = "result-box warning";
                 resText.textContent = "YOUR ELIGIBILITY IS POSSIBLE ONLY AFTER CONSULTATION WITH ZAB.";
+                reasonText.textContent = "General academic baseline parameters are met (3 independent subjects with grades of C or higher), but one or more choices require direct processing verification via the Central Office for Foreign Education.";
             } else {
                 resText.className = "result-box success";
-                resText.textContent = "Congratulations! Based on your responses, you meet the standard structural eligibility framework rules.";
+                resText.textContent = "Congratulations! You meet the standard general framework criteria rules.";
+                reasonText.textContent = "Your profile successfully satisfies the base structural entry checks: 3 distinct subjects, clean independent alignment without overlap criteria infractions, and minimum grade thresholds.";
             }
 
-            // Print special content annotations if matching custom indices exist
+            // Render contextual notes (such as Art focus fields)
             selected.forEach(s => {
                 if (s.notes) {
                     const block = document.createElement('div');
@@ -502,11 +673,14 @@
                 }
             });
 
+            // Reveal the Subject Specific Criteria Matrix to successful/ZAB candidates
+            document.getElementById('subject-specific-specs').style.display = 'block';
             resDisplay.style.display = 'block';
         }
 
         function resetWizard() {
             document.getElementById('result-display').style.display = 'none';
+            document.getElementById('subject-specific-specs').style.display = 'none';
             document.getElementById('sub1').value = "";
             document.getElementById('sub2').value = "";
             document.getElementById('sub3').value = "";
