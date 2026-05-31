@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eligibility checker of anabin regulation for A-levels students</title>
+    <title>Eligibility Checker of Anabin Regulations for A-levels Students</title>
     <style>
         :root {
             --ios-blue: #0a84ff;
@@ -30,17 +30,18 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Beautiful Blue Fluid Background */
-        @keyframes fluidGradient {
+        /* Calm, Breathing Blue Background */
+        @keyframes gentleBreathing {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
         body {
-            background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #e0c3fc, #e0f2fe);
-            background-size: 400% 400%;
-            animation: fluidGradient 15s ease infinite;
+            /* Strictly blue hues. The movement simulates a gentle increase/decrease in brightness */
+            background: linear-gradient(-45deg, #9cbff5, #b8d8fa, #d6efff, #b8d8fa);
+            background-size: 300% 300%;
+            animation: gentleBreathing 18s ease-in-out infinite;
             color: var(--text-dark);
             line-height: 1.6;
             padding: 20px;
@@ -372,15 +373,15 @@
 
     <div class="container">
         <header>
-            <h1>Eligibility checker of anabin regulation for A-levels students</h1>
+            <h1>Eligibility Checker of Anabin Regulations for A-levels Students</h1>
         </header>
 
         <!-- Grade Node -->
         <div id="node-grade" class="flow-node active">
             <h2>Grade Requirement</h2>
-            <p style="font-size: 1.1rem; color: #555;">Have you at least obtained 3 C's or better in your subjects?</p>
+            <p style="font-size: 1.1rem; color: #555;">Have you obtained at least a grade of 'C' or better in your subjects?</p>
             <div class="btn-group">
-                <button id="btn-grade-yes" onclick="answerGrade(true)">Yes, grades are C or above</button>
+                <button id="btn-grade-yes" onclick="answerGrade(true)">Yes, grades are 'C' or above</button>
                 <button id="btn-grade-no" onclick="answerGrade(false)">No, they are not</button>
             </div>
         </div>
@@ -391,7 +392,7 @@
         <!-- Subject Node -->
         <div id="node-subjects" class="flow-node">
             <h2>Subject Check</h2>
-            <p style="margin-bottom: 25px; color: #666;">Select your three A-Level subjects below to check if they are independent.</p>
+            <p style="margin-bottom: 25px; color: #666;">Select your three A Level subjects below to verify if they are independent.</p>
             
             <div class="form-group">
                 <label for="sub1">First Subject</label>
@@ -428,13 +429,13 @@
             <div id="subject-specific-specs" class="specs-container" style="display: none;">
                 <div class="specs-title">Subject-Specific Requirements (Fachspezifische Anforderungen)</div>
                 <div class="specs-notice">
-                    You need to determine your subject-specific eligibility from this matrix as well. Absolute confirmation of your intended program to be studied at a university following within a specific subject zone (for example, whether studying the program "International Engineering" at an XYZ public university following Anabin regulations falls under Mathematical or Technical, or under Natural Sciences specialization) can only be estimated or inquired directly at the university, uni-assist, or Anabin. In short, you need to be generally eligible (3 C's in three independent subjects) and subject-specific eligible.
+                    You need to determine your subject-specific eligibility from this matrix as well. Absolute confirmation of your intended program to be studied at a university falling within a specific subject zone (for example, whether studying the program "International Engineering" at an XYZ public university following Anabin regulations falls under Mathematical and Technical, or under Natural Sciences specialization) can only be estimated or inquired directly at the university, uni-assist, or Anabin. In short, you need to be generally eligible (three C's in three independent subjects) and meet the subject-specific eligibility requirements.
                 </div>
                 <table class="specs-table">
                     <thead>
                         <tr>
                             <th style="width: 40%;">Field of Study</th>
-                            <th style="width: 60%;">Specific A-Level Requirements</th>
+                            <th style="width: 60%;">Specific A Level Requirements</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -585,7 +586,7 @@
             { name: "Urdu", category: "Language", conflicts: [], zab: false }
         ];
 
-        const rejectionMessage = "Sorry you are not eligible for any Anabin regulation following university. This also includes all universities that partially (VPD procedure) or completely (direct application) utilise uni-assist for their application, since uni-assist also follows Anabin regulation.";
+        const rejectionMessage = "Sorry, you are not eligible for any Anabin regulation-following university. This also includes all universities that partially (VPD procedure) or completely (direct application) utilize uni-assist for their applications, since uni-assist also follows Anabin regulations.";
 
         window.onload = function() {
             populateDropdowns();
@@ -640,7 +641,7 @@
                 document.getElementById('conn-grade').classList.add('active');
                 
                 setTimeout(() => {
-                    showResult(false, 'grade', "You need to get a grade of C or higher in all three subjects.");
+                    showResult(false, 'grade', "You need to achieve a grade of 'C' or higher in all three subjects.");
                 }, 400);
             }
         }
@@ -737,11 +738,11 @@
                 if (context === 'zab') {
                     resText.className = "result-box warning";
                     resText.textContent = "YOUR ELIGIBILITY IS POSSIBLE ONLY AFTER CONSULTATION WITH ZAB.";
-                    reasonText.textContent = "You meet the general rules (3 independent subjects with grades of C or better), but one or more of your chosen subjects mean your eligibility can only be confirmed after checking with ZAB.";
+                    reasonText.textContent = "You meet the general rules (three independent subjects with grades of 'C' or better), but one or more of your chosen subjects require your eligibility to be confirmed by consulting with ZAB.";
                 } else {
                     resText.className = "result-box success";
                     resText.textContent = "You meet the standard requirements!";
-                    reasonText.textContent = "You meet the minimum Anabin regulation requirements, i.e., 3 C's in 3 independent subjects. Please refer below for the subject-specific requirements as well.";
+                    reasonText.textContent = "You meet the minimum Anabin regulation requirements (i.e., three C's in three independent subjects). Please refer to the matrix below for the subject-specific requirements.";
                 }
 
                 subjects.forEach(s => {
