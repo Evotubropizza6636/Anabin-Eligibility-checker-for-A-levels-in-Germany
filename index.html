@@ -6,27 +6,37 @@
     <title>Eligibility checker of anabin regulation for A-levels students</title>
     <style>
         :root {
-            --primary-color: #0b3c5d;
-            --secondary-color: #328cc1;
-            --danger-color: #d9534f;
-            --success-color: #5cb85c;
-            --warning-color: #f0ad4e;
-            --text-color: #333333;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
+            --ios-blue: #007aff;
+            --ios-blue-hover: #005bb5;
+            --ios-green: #34c759;
+            --ios-red: #ff3b30;
+            --ios-orange: #ff9500;
+            --text-main: #1d1d1f;
+            --text-muted: #86868b;
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @keyframes fluidGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #e0f2fe, #fdf4ff);
+            background-size: 400% 400%;
+            animation: fluidGradient 15s ease infinite;
+            color: var(--text-main);
             line-height: 1.6;
             padding: 20px;
             display: flex;
@@ -41,229 +51,290 @@
             flex: 1;
         }
 
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: var(--glass-shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 20px;
+            padding: 10px 0 20px 0;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         header h1 {
-            color: var(--primary-color);
             font-size: 1.8rem;
             font-weight: 700;
+            background: linear-gradient(90deg, #1d1d1f, #434344);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+        .progress-tracker {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 15px;
+        }
+
+        .dot {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .dot.active {
+            background: var(--ios-blue);
+            color: white;
+            border-color: var(--ios-blue);
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        }
+
+        .line {
+            height: 3px;
+            width: 50px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 2px;
+        }
+
+        .line.active {
+            background: var(--ios-blue);
         }
 
         .step {
             display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s forwards ease;
         }
 
         .step.active {
             display: block;
         }
 
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         h2 {
-            color: var(--primary-color);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 15px;
+            font-weight: 700;
         }
 
         .btn-group {
             display: flex;
             gap: 15px;
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
         button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
+            padding: 16px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            transition: background 0.2s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             flex: 1;
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-main);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            backdrop-filter: blur(10px);
         }
 
-        button.btn-yes {
-            background-color: var(--primary-color);
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        button.btn-yes, button.btn-submit {
+            background: var(--ios-blue);
             color: white;
+            border: none;
         }
 
-        button.btn-yes:hover {
-            background-color: var(--secondary-color);
-        }
-
-        button.btn-no {
-            background-color: #e2e8f0;
-            color: #333;
-        }
-
-        button.btn-no:hover {
-            background-color: #cbd5e1;
-        }
-
-        button.btn-submit {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        button.btn-submit:hover {
-            background-color: var(--secondary-color);
+        button.btn-yes:hover, button.btn-submit:hover {
+            background: var(--ios-blue-hover);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
-            color: var(--primary-color);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            background-color: #fff;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            font-size: 1.05rem;
+            background-color: rgba(255, 255, 255, 0.6);
+            color: var(--text-main);
+            backdrop-filter: blur(10px);
             outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2386868b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px top 50%;
+            background-size: 12px auto;
         }
 
         select:focus {
-            border-color: var(--secondary-color);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: var(--ios-blue);
         }
 
         .result-box {
-            padding: 20px;
-            border-radius: 5px;
+            padding: 25px;
+            border-radius: 20px;
             margin-top: 20px;
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-align: center;
         }
 
         .result-box.error {
-            background-color: #fce8e6;
-            border-left: 5px solid var(--danger-color);
-            color: #a94442;
+            background-color: rgba(255, 59, 48, 0.1);
+            color: var(--ios-red);
+            border: 1px solid rgba(255, 59, 48, 0.3);
         }
 
         .result-box.success {
-            background-color: #e6f4ea;
-            border-left: 5px solid var(--success-color);
-            color: #2b542c;
+            background-color: rgba(52, 199, 89, 0.1);
+            color: #248a3d;
+            border: 1px solid rgba(52, 199, 89, 0.3);
         }
 
         .result-box.warning {
-            background-color: #fcf8e3;
-            border-left: 5px solid var(--warning-color);
-            color: #8a6d3b;
+            background-color: rgba(255, 149, 0, 0.1);
+            color: #b36800;
+            border: 1px solid rgba(255, 149, 0, 0.3);
         }
 
         .reasoning-box {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
         }
 
         .reasoning-box h4 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .note-block {
             margin-top: 15px;
             font-size: 0.95rem;
-            background: #fffbeb;
-            padding: 15px;
-            border-radius: 4px;
-            border: 1px solid #fef3c7;
-            color: #92400e;
+            background: rgba(255, 204, 0, 0.15);
+            padding: 15px 20px;
+            border-radius: 12px;
+            color: #997a00;
+            border: 1px solid rgba(255, 204, 0, 0.3);
         }
 
-        /* Subject Specific Requirements Table Styling */
         .specs-container {
-            margin-top: 30px;
-            border-top: 2px solid var(--border-color);
-            padding-top: 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 30px;
         }
 
         .specs-title {
-            color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 15px;
             font-weight: 700;
         }
 
         .specs-notice {
-            background-color: #f0fdfa;
-            border-left: 4px solid #0d9488;
-            padding: 15px;
-            border-radius: 4px;
+            background-color: rgba(90, 200, 250, 0.15);
+            padding: 20px;
+            border-radius: 16px;
             font-size: 0.95rem;
-            color: #115e59;
-            margin-bottom: 20px;
+            color: #005e82;
+            margin-bottom: 25px;
             text-align: justify;
         }
 
         .specs-table {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--glass-border);
         }
 
         .specs-table th, .specs-table td {
-            padding: 12px;
+            padding: 16px;
             text-align: left;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.95rem;
         }
 
         .specs-table th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.8);
+            font-weight: 700;
+            color: var(--text-main);
         }
 
-        .specs-table tr:nth-child(even) {
-            background-color: #f8fafc;
+        .specs-table tr:last-child td {
+            border-bottom: none;
         }
 
         .verify-box {
-            background: #f1f5f9;
-            padding: 20px;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 25px;
+            border-radius: 20px;
             margin-top: 30px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--glass-border);
         }
 
         .verify-box h3 {
-            color: var(--primary-color);
-            font-size: 1.05rem;
-            margin-bottom: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
 
         .verify-box p {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
         }
 
         .verify-box a {
-            color: var(--secondary-color);
+            color: var(--ios-blue);
             text-decoration: none;
             font-weight: 600;
         }
@@ -274,80 +345,69 @@
 
         footer {
             margin-top: auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: justify;
             font-size: 0.9rem;
-            border-top: 4px solid #cbd5e1;
+            color: var(--text-muted);
         }
 
         footer h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        footer p {
-            color: #555;
-            text-align: justify;
-        }
-
-        .reset-btn {
-            background-color: #64748b;
-            color: white;
-            margin-top: 25px;
-            max-width: 200px;
-        }
-
-        .reset-btn:hover {
-            background-color: #475569;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header>
-            <h1>Eligibility checker of anabin regulation for A-levels students</h1>
-        </header>
+        <div class="glass-panel">
+            <header>
+                <h1>Eligibility checker of anabin regulation for A-levels students</h1>
+            </header>
 
-        <div class="card">
-            <!-- Step 1: Volume Check -->
+            <div class="progress-tracker" id="tracker">
+                <div class="dot active" id="dot-1">1</div>
+                <div class="line" id="line-1"></div>
+                <div class="dot" id="dot-2">2</div>
+                <div class="line" id="line-2"></div>
+                <div class="dot" id="dot-3">3</div>
+            </div>
+
+            <!-- Step 1 -->
             <div id="step-1" class="step active">
-                <h2>Question 1</h2>
-                <p style="font-size: 1.1rem;">Have you or will you have studied 3 full Advanced Level subjects in A Levels?</p>
+                <h2>Volume Requirement</h2>
+                <p style="font-size: 1.1rem; color: #444;">Have you or will you have studied 3 full Advanced Level subjects in A Levels?</p>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="nextStep(2)">Yes</button>
-                    <button class="btn-no" onclick="failStep('step1')">No</button>
+                    <button class="btn-yes" onclick="nextStep(2)">Yes, I have 3 subjects</button>
+                    <button class="btn-no" onclick="failStep('step1')">No, I do not</button>
                 </div>
             </div>
 
-            <!-- Step 2: Grade Check -->
+            <!-- Step 2 -->
             <div id="step-2" class="step">
-                <h2>Question 2</h2>
-                <p style="font-size: 1.1rem;">Have you at least obtained 3 C's or better in your subjects?</p>
+                <h2>Grade Requirement</h2>
+                <p style="font-size: 1.1rem; color: #444;">Have you at least obtained 3 C's or better in your subjects?</p>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="nextStep(3)">Yes</button>
-                    <button class="btn-no" onclick="failStep('step2')">No</button>
+                    <button class="btn-yes" onclick="nextStep(3)">Yes, grades are C or above</button>
+                    <button class="btn-no" onclick="failStep('step2')">No, they are not</button>
                 </div>
             </div>
 
-            <!-- Step 3: Subject Configuration -->
+            <!-- Step 3 -->
             <div id="step-3" class="step">
-                <h2>Subject Selection</h2>
-                <p style="margin-bottom: 20px; color: #666;">Please select your three full A-Level subjects below to analyze structural independence rules.</p>
+                <h2>Subject Check</h2>
+                <p style="margin-bottom: 25px; color: #666;">Select your three A-Level subjects below to check if they are independent.</p>
                 
                 <div class="form-group">
-                    <label for="sub1">Subject 1</label>
+                    <label for="sub1">First Subject</label>
                     <select id="sub1"></select>
                 </div>
                 <div class="form-group">
-                    <label for="sub2">Subject 2</label>
+                    <label for="sub2">Second Subject</label>
                     <select id="sub2"></select>
                 </div>
                 <div class="form-group">
-                    <label for="sub3">Subject 3</label>
+                    <label for="sub3">Third Subject</label>
                     <select id="sub3"></select>
                 </div>
 
@@ -356,21 +416,19 @@
                 </div>
             </div>
 
-            <!-- Results Output Area -->
+            <!-- Output Screen -->
             <div id="result-display" style="display: none;">
                 <div id="result-text" class="result-box"></div>
                 
-                <!-- Dynamic Rule Explanation Box -->
                 <div class="reasoning-box">
-                    <h4>Evaluation Ruling Explanation:</h4>
-                    <p id="reasoning-text"></p>
+                    <h4>Result Details</h4>
+                    <p id="reasoning-text" style="font-weight: 500;"></p>
                 </div>
 
                 <div id="additional-notes"></div>
 
-                <!-- Subject-Specific Requirements Panel (Unlocks post-evaluation) -->
                 <div id="subject-specific-specs" class="specs-container" style="display: none;">
-                    <div class="specs-title">2. Subject-Specific Requirements (Fachspezifische Anforderungen)</div>
+                    <div class="specs-title">Subject-Specific Requirements (Fachspezifische Anforderungen)</div>
                     <div class="specs-notice">
                         You need to determine your subject-specific eligibility from this matrix as well. Absolute confirmation of your intended program to be studied at a university following within a specific subject zone (for example, whether studying the program "International Engineering" at an XYZ public university following Anabin regulations falls under Mathematical or Technical, or under Natural Sciences specialization) can only be estimated or inquired directly at the university, uni-assist, or Anabin. In short, you need to be generally eligible (3 C's in three independent subjects) and subject-specific eligible as well in addition to the general eligibility.
                     </div>
@@ -378,7 +436,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 40%;">Field of Study</th>
-                                <th style="width: 60%;">Specific A-Level Subject Requirements</th>
+                                <th style="width: 60%;">Specific A-Level Requirements</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -414,25 +472,27 @@
                     </table>
                 </div>
 
-                <!-- Manual Verification Box (Appears at the end of a decision block) -->
                 <div class="verify-box">
                     <h3>Verify Your Eligibility Manually</h3>
                     <p>You can determine your eligibility yourself by visiting the following website: <a href="https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#" target="_blank">https://anabin.kmk.org/db/schulabschluesse-mit-hochschulzugang#</a> and selecting 'Großbritannien', followed by 'International Advanced Level'.</p>
                     <p>Alternatively, if the link is invalid or fails to open, you can go directly to the Anabin homepage. Navigate to the 'Schulabschlüsse mit Hochschulzugang' (School leaving certificates with university entrance qualifications) section, select 'Großbritannien', and then choose 'International Advanced Level'.</p>
                 </div>
 
-                <button class="reset-btn" onclick="resetWizard()">Start Over</button>
+                <div class="btn-group">
+                    <button class="btn-no" onclick="resetWizard()" style="margin-top: 20px;">Start New Analysis</button>
+                </div>
             </div>
         </div>
 
-        <footer>
-            <h3>Important Disclaimer</h3>
-            <p>It is still highly advised to check all entry requirements with your chosen university before submitting an application. This tool provides information for guidance only, as each university retains the right to set its own specific entry requirements, including subject choices, combinations, and language prerequisites, within the broader recommendations of the Central Office for Foreign Education. As a best practice, if you are not absolutely sure about your eligibility, please contact your university's admissions office, use the uni-assist contact form available on their website, reach out via the contact information provided by Anabin, or consult any other concerned authority involved in your admission process.</p>
-        </footer>
+        <div class="glass-panel" style="padding: 25px 30px;">
+            <footer>
+                <h3>Important Disclaimer</h3>
+                <p>It is still highly advised to check all entry requirements with your chosen university before submitting an application. This tool provides information for guidance only, as each university retains the right to set its own specific entry requirements, including subject choices, combinations, and language prerequisites, within the broader recommendations of the Central Office for Foreign Education. As a best practice, if you are not absolutely sure about your eligibility, please contact your university's admissions office, use the uni-assist contact form available on their website, reach out via the contact information provided by Anabin, or consult any other concerned authority involved in your admission process.</p>
+            </footer>
+        </div>
     </div>
 
     <script>
-        // Master dataset mapping items safely without string citation artifacts
         const subjectDatabase = [
             { name: "Accounting", category: "Invalid", conflicts: [], zab: false, notes: "Accounting is not considered a valid academic subject for university admission framework requirements in Germany." },
             { name: "Ancient History", category: "History-Related", conflicts: ["History"], zab: false },
@@ -548,13 +608,33 @@
             });
         }
 
+        function updateProgressTracker(stepNumber) {
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                if (index < stepNumber) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            document.querySelectorAll('.line').forEach((line, index) => {
+                if (index < stepNumber - 1) {
+                    line.classList.add('active');
+                } else {
+                    line.classList.remove('active');
+                }
+            });
+        }
+
         function nextStep(stepNumber) {
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
             document.getElementById(`step-${stepNumber}`).classList.add('active');
+            updateProgressTracker(stepNumber);
         }
 
         function failStep(context) {
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('tracker').style.display = 'none';
+            
             const resDisplay = document.getElementById('result-display');
             const resText = document.getElementById('result-text');
             const reasonText = document.getElementById('reasoning-text');
@@ -563,9 +643,9 @@
             resText.textContent = rejectionMessage;
 
             if (context === 'step1') {
-                reasonText.textContent = "Ineligibility triggered at Step 1: The user has not studied or will not have studied a minimum total volume of 3 full Advanced Level subjects.";
+                reasonText.textContent = "You need to have studied at least 3 full Advanced Level subjects.";
             } else if (context === 'step2') {
-                reasonText.textContent = "Ineligibility triggered at Step 2: The user has not obtained a minimum grade of C or better across their three full A-Level subjects.";
+                reasonText.textContent = "You need to get a grade of C or higher in all three subjects.";
             }
 
             document.getElementById('additional-notes').innerHTML = "";
@@ -579,11 +659,11 @@
             const s3Name = document.getElementById('sub3').value;
 
             if (!s1Name || !s2Name || !s3Name) {
-                alert("Please select all three subjects.");
+                alert("Please select all three subjects to continue.");
                 return;
             }
             if (s1Name === s2Name || s1Name === s3Name || s2Name === s3Name) {
-                alert("Please select three completely distinct subjects.");
+                alert("Please select three distinct subjects. You cannot choose the same subject twice.");
                 return;
             }
 
@@ -593,24 +673,26 @@
             const selected = [sub1, sub2, sub3];
 
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('tracker').style.display = 'none';
+            
             const resDisplay = document.getElementById('result-display');
             const resText = document.getElementById('result-text');
             const reasonText = document.getElementById('reasoning-text');
             const notesDiv = document.getElementById('additional-notes');
             notesDiv.innerHTML = "";
 
-            // 1. Check for Invalid Academic Subjects (Accounting)
+            // 1. Invalid Subject Validation
             const invalidSub = selected.find(s => s.category === "Invalid");
             if (invalidSub) {
                 resText.className = "result-box error";
                 resText.textContent = rejectionMessage;
-                reasonText.textContent = `Ineligibility triggered at Step 3: Your selection includes "${invalidSub.name}". ${invalidSub.notes}`;
+                reasonText.textContent = `"${invalidSub.name}" is not accepted as a valid academic subject for German universities.`;
                 document.getElementById('subject-specific-specs').style.display = 'none';
                 resDisplay.style.display = 'block';
                 return;
             }
 
-            // 2. Structural Independence Rules Assessment
+            // 2. Overlap Rules Validation
             let conflictFound = false;
             let conflictReason = "";
 
@@ -619,22 +701,16 @@
                     const a = selected[i];
                     const b = selected[j];
 
-                    // Category matching check (Languages are exempted)
                     if (a.category === b.category && a.category !== "Language") {
                         conflictFound = true;
-                        conflictReason = `Your selected subjects "${a.name}" and "${b.name}" are not independent of each other because they fall under the same subject specialization category (${a.category}).`;
+                        conflictReason = `"${a.name}" and "${b.name}" overlap because they are in the same subject category. You cannot use both together.`;
                         break;
                     }
 
-                    // Left list cross matching cross-conflicts (e.g. Business vs Economics / Electronics vs Physics)
-                    if (a.conflicts.includes(b.category) || a.conflicts.includes(b.name)) {
+                    if (a.conflicts.includes(b.category) || a.conflicts.includes(b.name) || 
+                        b.conflicts.includes(a.category) || b.conflicts.includes(a.name)) {
                         conflictFound = true;
-                        conflictReason = `Your selected subjects "${a.name}" and "${b.name}" are not independent of each other according to the structural exclusion parameters of the Anabin database matrix.`;
-                        break;
-                    }
-                    if (b.conflicts.includes(a.category) || b.conflicts.includes(a.name)) {
-                        conflictFound = true;
-                        conflictReason = `Your selected subjects "${b.name}" and "${a.name}" are not independent of each other according to the structural exclusion parameters of the Anabin database matrix.`;
+                        conflictReason = `According to Anabin regulations, "${a.name}" and "${b.name}" are not considered independent of each other. You cannot use both together.`;
                         break;
                     }
                 }
@@ -644,26 +720,25 @@
             if (conflictFound) {
                 resText.className = "result-box error";
                 resText.textContent = rejectionMessage;
-                reasonText.textContent = `Ineligibility triggered at Step 3 (Independence Check): ${conflictReason}`;
+                reasonText.textContent = conflictReason;
                 document.getElementById('subject-specific-specs').style.display = 'none';
                 resDisplay.style.display = 'block';
                 return;
             }
 
-            // 3. Status determination (ZAB consultation vs Standard General Admission)
+            // 3. Final Evaluation Responses
             const requiresZAB = selected.some(s => s.zab === true);
 
             if (requiresZAB) {
                 resText.className = "result-box warning";
                 resText.textContent = "YOUR ELIGIBILITY IS POSSIBLE ONLY AFTER CONSULTATION WITH ZAB.";
-                reasonText.textContent = "General academic baseline parameters are met (3 independent subjects with grades of C or higher), but one or more choices require direct processing verification via the Central Office for Foreign Education.";
+                reasonText.textContent = "You meet the general rules (3 independent subjects with grades of C or better), but one or more of your chosen subjects mean your eligibility can only be confirmed after checking with ZAB.";
             } else {
                 resText.className = "result-box success";
-                resText.textContent = "Congratulations! You meet the standard general framework criteria rules.";
-                reasonText.textContent = "Your profile successfully satisfies the base structural entry checks: 3 distinct subjects, clean independent alignment without overlap criteria infractions, and minimum grade thresholds.";
+                resText.textContent = "You meet the standard requirements!";
+                reasonText.textContent = "You meet the minimum Anabin regulation requirements, i.e., 3 C's in 3 independent subjects. Please refer below for the subject-specific requirements as well.";
             }
 
-            // Render contextual notes (such as Art focus fields)
             selected.forEach(s => {
                 if (s.notes) {
                     const block = document.createElement('div');
@@ -673,7 +748,6 @@
                 }
             });
 
-            // Reveal the Subject Specific Criteria Matrix to successful/ZAB candidates
             document.getElementById('subject-specific-specs').style.display = 'block';
             resDisplay.style.display = 'block';
         }
@@ -684,6 +758,7 @@
             document.getElementById('sub1').value = "";
             document.getElementById('sub2').value = "";
             document.getElementById('sub3').value = "";
+            document.getElementById('tracker').style.display = 'flex';
             nextStep(1);
         }
     </script>
