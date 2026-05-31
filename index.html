@@ -6,22 +6,20 @@
     <title>Eligibility checker of anabin regulation for A-levels students</title>
     <style>
         :root {
-            /* Calm, Natural, Organic Palette */
-            --organic-blue: #5ba4e5;
-            --organic-blue-hover: #4a8dcb;
-            --organic-red: #e06c6c;
-            --text-dark: #2c3e50;
-            --text-muted: #7f8c8d;
+            --ios-blue: #0a84ff;
+            --ios-blue-hover: #0070e6;
+            --text-dark: #1d1d1f;
+            --text-muted: #6e6e73;
             
-            /* Soft Frosted Glass Cards */
-            --glass-card-bg: rgba(250, 252, 255, 0.92);
-            --glass-card-border: rgba(255, 255, 255, 0.8);
-            --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+            /* Bright Frosted Glass Cards */
+            --glass-card-bg: rgba(255, 255, 255, 0.85);
+            --glass-card-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
             
-            /* Watery, Natural Button Effect */
-            --water-btn-bg: rgba(255, 255, 255, 0.6);
-            --water-btn-border: rgba(255, 255, 255, 0.9);
-            --water-btn-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.8), 0 4px 15px rgba(0, 0, 0, 0.04);
+            /* Watery Button Effect */
+            --water-btn-bg: rgba(255, 255, 255, 0.5);
+            --water-btn-border: rgba(255, 255, 255, 0.8);
+            --water-btn-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 0, 0, 0.03);
         }
 
         * {
@@ -32,17 +30,17 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Deep, Soft, Natural Twilight Background (Not Black) */
-        @keyframes gentleBreeze {
+        /* Beautiful Blue Fluid Background */
+        @keyframes fluidGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
         body {
-            background: linear-gradient(-45deg, #2c3540, #394352, #29323c, #1f262e);
+            background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #e0c3fc, #e0f2fe);
             background-size: 400% 400%;
-            animation: gentleBreeze 20s ease infinite;
+            animation: fluidGradient 15s ease infinite;
             color: var(--text-dark);
             line-height: 1.6;
             padding: 20px;
@@ -68,69 +66,74 @@
         header h1 {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #f0f4f8; /* Soft off-white */
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            letter-spacing: 0.3px;
+            color: #1d1d1f;
+            text-shadow: 0 4px 20px rgba(255,255,255,0.6);
         }
 
-        /* Soft Light Guidance Nodes */
+        /* Flow Nodes with Spring-Drop Animation */
         .flow-node {
             background: var(--glass-card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px) saturate(120%);
+            -webkit-backdrop-filter: blur(25px) saturate(120%);
             border: 1px solid var(--glass-card-border);
-            border-radius: 30px;
+            border-radius: 28px;
             box-shadow: var(--glass-shadow);
             padding: 40px;
             display: none;
             opacity: 0;
-            transform: translateY(-15px);
             position: relative;
             z-index: 2;
         }
 
         .flow-node.active {
             display: block;
-            animation: flowDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation: dropInSpring 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
-        @keyframes flowDown {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes dropInSpring {
+            0% { opacity: 0; transform: translateY(-40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Organic, Soft Branch Connectors */
+        /* Animated Liquid Connectors */
         .connector {
-            width: 6px; /* Thicker, softer */
-            height: 45px;
+            width: 6px;
+            height: 0px;
             margin: 0 auto;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(10,132,255,0.1) 0%, rgba(10,132,255,0.7) 50%, rgba(10,132,255,0.1) 100%);
+            background-size: 100% 200%;
             opacity: 0;
             display: none;
-            /* Gradient makes it look like a smooth stem growing */
-            background: linear-gradient(to bottom, rgba(169, 194, 201, 0) 0%, #9cb3c2 20%, #9cb3c2 80%, rgba(169, 194, 201, 0) 100%);
-            border-radius: 10px;
             position: relative;
             z-index: 1;
         }
 
         .connector.active {
             display: block;
-            animation: growBranch 0.7s ease forwards;
+            /* 1st anim grows it down, 2nd anim simulates flowing water indefinitely */
+            animation: growDown 0.4s ease forwards, flowingLiquid 1.5s linear infinite 0.4s;
         }
 
-        @keyframes growBranch {
-            0% { height: 0; opacity: 0; }
-            100% { height: 45px; opacity: 0.6; }
+        @keyframes growDown {
+            from { height: 0; opacity: 0; }
+            to { height: 50px; opacity: 0.8; }
+        }
+
+        @keyframes flowingLiquid {
+            0% { background-position: 0% -100%; opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { background-position: 0% 100%; opacity: 0.8; }
         }
 
         h2 {
-            font-size: 1.45rem;
+            font-size: 1.5rem;
             margin-bottom: 15px;
             font-weight: 700;
-            color: #1a252f;
+            color: var(--text-dark);
         }
 
-        /* iOS Watery Transparency Buttons - Softened */
+        /* iOS Watery Buttons */
         .btn-group {
             display: flex;
             gap: 15px;
@@ -139,14 +142,13 @@
 
         button {
             padding: 18px 24px;
-            border-radius: 22px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 1.05rem;
             font-weight: 600;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             flex: 1;
             
-            /* Watery Glass Effect */
             background: var(--water-btn-bg);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -156,40 +158,39 @@
         }
 
         button:hover:not(.dimmed):not(.selected) {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: inset 0 2px 15px rgba(255, 255, 255, 1), 0 8px 20px rgba(0, 0, 0, 0.06);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 2px 15px rgba(255, 255, 255, 1), 0 8px 20px rgba(0, 0, 0, 0.05);
         }
 
-        /* Selected State: Solid, Reassuring Natural Color */
         button.selected {
-            background: var(--organic-blue);
+            background: var(--ios-blue);
             color: white;
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.3), 0 8px 25px rgba(91, 164, 229, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.3), inset 0 2px 10px rgba(255, 255, 255, 0.3);
         }
 
         button.dimmed {
             opacity: 0.35;
             background: transparent;
             pointer-events: none;
-            border-color: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.1);
             box-shadow: none;
         }
 
         button.btn-submit {
-            background: var(--organic-blue);
+            background: var(--ios-blue);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 15px rgba(91, 164, 229, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.2);
         }
         
         button.btn-submit:hover {
-            background: var(--organic-blue-hover);
-            box-shadow: 0 6px 20px rgba(91, 164, 229, 0.4);
+            background: var(--ios-blue-hover);
+            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.4);
         }
 
-        /* Soft Watery Dropdowns */
+        /* Watery Dropdowns */
         .form-group {
             margin-bottom: 20px;
         }
@@ -207,21 +208,20 @@
         select {
             width: 100%;
             padding: 16px;
-            border-radius: 18px;
+            border-radius: 16px;
             font-size: 1.05rem;
             color: var(--text-dark);
             outline: none;
             cursor: pointer;
             appearance: none;
             
-            /* Watery Glass Effect */
             background-color: var(--water-btn-bg);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.8);
             
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%237f8c8d%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2386868b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
             background-position: right 18px top 50%;
             background-size: 12px auto;
@@ -230,8 +230,8 @@
 
         select:focus {
             background-color: rgba(255, 255, 255, 0.9);
-            border-color: var(--organic-blue);
-            box-shadow: 0 0 0 3px rgba(91, 164, 229, 0.2);
+            border-color: var(--ios-blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
         }
 
         .result-box {
@@ -244,28 +244,28 @@
         }
 
         .result-box.error {
-            background-color: rgba(224, 108, 108, 0.1);
-            color: #c0392b;
-            border: 1px solid rgba(224, 108, 108, 0.2);
+            background-color: rgba(255, 69, 58, 0.1);
+            color: #d93025;
+            border: 1px solid rgba(255, 69, 58, 0.2);
         }
 
         .result-box.success {
-            background-color: rgba(76, 175, 80, 0.1);
-            color: #27ae60;
-            border: 1px solid rgba(76, 175, 80, 0.2);
+            background-color: rgba(48, 209, 88, 0.1);
+            color: #1a7d2e;
+            border: 1px solid rgba(48, 209, 88, 0.2);
         }
 
         .result-box.warning {
-            background-color: rgba(243, 156, 18, 0.1);
+            background-color: rgba(255, 159, 10, 0.1);
             color: #d35400;
-            border: 1px solid rgba(243, 156, 18, 0.2);
+            border: 1px solid rgba(255, 159, 10, 0.2);
         }
 
         .reasoning-box {
             padding: 20px;
             background-color: rgba(0, 0, 0, 0.02);
-            border-radius: 18px;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .reasoning-box h4 {
@@ -279,16 +279,16 @@
         .note-block {
             margin-top: 15px;
             font-size: 0.95rem;
-            background: rgba(243, 156, 18, 0.08);
+            background: rgba(255, 159, 10, 0.1);
             padding: 15px 20px;
             border-radius: 14px;
-            color: #b9770e;
-            border: 1px solid rgba(243, 156, 18, 0.15);
+            color: #b35900;
+            border: 1px solid rgba(255, 159, 10, 0.2);
         }
 
         .specs-container {
             margin-top: 35px;
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             padding-top: 25px;
         }
 
@@ -299,11 +299,11 @@
         }
 
         .specs-notice {
-            background-color: rgba(91, 164, 229, 0.1);
+            background-color: rgba(10, 132, 255, 0.1);
             padding: 20px;
             border-radius: 16px;
             font-size: 0.95rem;
-            color: #2980b9;
+            color: #005e82;
             margin-bottom: 25px;
             text-align: justify;
         }
@@ -314,7 +314,7 @@
             border-spacing: 0;
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             background: rgba(255, 255, 255, 0.6);
         }
 
@@ -326,9 +326,8 @@
         }
 
         .specs-table th {
-            background-color: rgba(0, 0, 0, 0.02);
+            background-color: rgba(0, 0, 0, 0.03);
             font-weight: 700;
-            color: #2c3e50;
         }
 
         .specs-table tr:last-child td { border-bottom: none; }
@@ -338,12 +337,12 @@
             padding: 25px;
             border-radius: 20px;
             margin-top: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .verify-box h3 { font-size: 1.05rem; margin-bottom: 10px; }
         .verify-box p { font-size: 0.95rem; margin-bottom: 15px; color: var(--text-muted); text-align: justify; }
-        .verify-box a { color: var(--organic-blue); text-decoration: none; font-weight: 600; }
+        .verify-box a { color: var(--ios-blue); text-decoration: none; font-weight: 600; }
         .verify-box a:hover { text-decoration: underline; }
 
         .reset-link {
@@ -357,16 +356,15 @@
             font-size: 0.95rem;
             transition: color 0.2s;
         }
-        .reset-link:hover { color: var(--organic-blue); }
+        .reset-link:hover { color: var(--ios-blue); }
 
-        /* Clean, Humane Disclaimer Section */
         footer {
             margin-top: 10px;
             text-align: justify;
             font-size: 0.95rem;
             color: var(--text-dark);
         }
-        footer h3 { font-size: 1.1rem; margin-bottom: 12px; color: #1a252f; }
+        footer h3 { font-size: 1.1rem; margin-bottom: 12px; color: #1d1d1f; }
         footer p { margin-bottom: 15px; }
     </style>
 </head>
@@ -387,7 +385,7 @@
             </div>
         </div>
 
-        <!-- The Soft Organic Stem/Branch -->
+        <!-- Flowing Liquid Connector -->
         <div id="conn-grade" class="connector"></div>
 
         <!-- Subject Node -->
@@ -413,7 +411,7 @@
             </div>
         </div>
 
-        <!-- The Soft Organic Stem/Branch -->
+        <!-- Flowing Liquid Connector -->
         <div id="conn-subjects" class="connector"></div>
 
         <!-- Result Node -->
@@ -481,7 +479,7 @@
             <span class="reset-link" onclick="resetWizard()">Start a new analysis</span>
         </div>
 
-        <div class="flow-node active" style="margin-top: 30px; border-radius: 30px;">
+        <div class="flow-node active" style="margin-top: 30px; border-radius: 28px;">
             <footer>
                 <h3>Important Disclaimer</h3>
                 <p>It is still highly advised to check all entry requirements with your chosen university before submitting an application. This tool provides information for guidance only, as each university retains the right to set its own specific entry requirements, including subject choices, combinations, and language prerequisites, within the broader recommendations of the Central Office for Foreign Education. As a best practice, if you are not absolutely sure about your eligibility, please contact your university's admissions office, use the uni-assist contact form available on their website, reach out via the contact information provided by Anabin, or consult any other concerned authority involved in your admission process.</p>
@@ -606,35 +604,44 @@
             });
         }
 
+        // Animated Logic Flow
         function answerGrade(passed) {
             const btnYes = document.getElementById('btn-grade-yes');
             const btnNo = document.getElementById('btn-grade-no');
 
+            // Resetting classes to prevent animation bugs on replay
             btnYes.className = "";
             btnNo.className = "";
-
             document.getElementById('conn-subjects').classList.remove('active');
             document.getElementById('node-result').classList.remove('active');
+            document.getElementById('node-subjects').classList.remove('active');
+            document.getElementById('conn-grade').classList.remove('active');
+
+            // Force reflow
+            void document.getElementById('conn-grade').offsetWidth;
 
             if (passed) {
                 btnYes.classList.add('selected');
                 btnNo.classList.add('dimmed');
                 
-                document.getElementById('node-subjects').classList.remove('active');
-                void document.getElementById('node-subjects').offsetWidth;
-                
+                // 1. Line starts flowing down
                 document.getElementById('conn-grade').classList.add('active');
-                document.getElementById('node-subjects').classList.add('active');
                 
-                setTimeout(() => { document.getElementById('node-subjects').scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+                // 2. Next node pops open right as the line reaches the bottom
+                setTimeout(() => {
+                    document.getElementById('node-subjects').classList.add('active');
+                    setTimeout(() => { document.getElementById('node-subjects').scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 50);
+                }, 400);
+
             } else {
                 btnNo.classList.add('selected');
                 btnYes.classList.add('dimmed');
                 
-                document.getElementById('node-subjects').classList.remove('active');
-                
                 document.getElementById('conn-grade').classList.add('active');
-                showResult(false, 'grade', "You need to get a grade of C or higher in all three subjects.");
+                
+                setTimeout(() => {
+                    showResult(false, 'grade', "You need to get a grade of C or higher in all three subjects.");
+                }, 400);
             }
         }
 
@@ -656,6 +663,11 @@
             btnEval.innerHTML = "Analysis Complete";
             btnEval.classList.add('selected');
 
+            document.getElementById('node-result').classList.remove('active');
+            document.getElementById('conn-subjects').classList.remove('active');
+            void document.getElementById('conn-subjects').offsetWidth;
+
+            // 1. Line flows down
             document.getElementById('conn-subjects').classList.add('active');
 
             const sub1 = subjectDatabase.find(s => s.name === s1Name);
@@ -663,46 +675,46 @@
             const sub3 = subjectDatabase.find(s => s.name === s3Name);
             const selected = [sub1, sub2, sub3];
 
-            // Invalid Check
-            const invalidSub = selected.find(s => s.category === "Invalid");
-            if (invalidSub) {
-                showResult(false, 'invalid', `"${invalidSub.name}" is not accepted as a valid academic subject for German universities.`);
-                return;
-            }
-
-            // Overlap Check
-            let conflictFound = false;
-            let conflictReason = "";
-
-            for (let i = 0; i < selected.length; i++) {
-                for (let j = i + 1; j < selected.length; j++) {
-                    const a = selected[i];
-                    const b = selected[j];
-
-                    if (a.category === b.category && a.category !== "Language") {
-                        conflictFound = true;
-                        conflictReason = `"${a.name}" and "${b.name}" overlap because they are in the same subject category. You cannot use both together.`;
-                        break;
-                    }
-
-                    if (a.conflicts.includes(b.category) || a.conflicts.includes(b.name) || 
-                        b.conflicts.includes(a.category) || b.conflicts.includes(a.name)) {
-                        conflictFound = true;
-                        conflictReason = `According to Anabin regulations, "${a.name}" and "${b.name}" are not considered independent of each other. You cannot use both together.`;
-                        break;
-                    }
+            // 2. Delay the result reveal so the liquid line connects first
+            setTimeout(() => {
+                const invalidSub = selected.find(s => s.category === "Invalid");
+                if (invalidSub) {
+                    showResult(false, 'invalid', `"${invalidSub.name}" is not accepted as a valid academic subject for German universities.`);
+                    return;
                 }
-                if (conflictFound) break;
-            }
 
-            if (conflictFound) {
-                showResult(false, 'overlap', conflictReason);
-                return;
-            }
+                let conflictFound = false;
+                let conflictReason = "";
 
-            // Outcomes
-            const requiresZAB = selected.some(s => s.zab === true);
-            showResult(true, requiresZAB ? 'zab' : 'success', "", selected);
+                for (let i = 0; i < selected.length; i++) {
+                    for (let j = i + 1; j < selected.length; j++) {
+                        const a = selected[i];
+                        const b = selected[j];
+
+                        if (a.category === b.category && a.category !== "Language") {
+                            conflictFound = true;
+                            conflictReason = `"${a.name}" and "${b.name}" overlap because they are in the same subject category. You cannot use both together.`;
+                            break;
+                        }
+
+                        if (a.conflicts.includes(b.category) || a.conflicts.includes(b.name) || 
+                            b.conflicts.includes(a.category) || b.conflicts.includes(a.name)) {
+                            conflictFound = true;
+                            conflictReason = `According to Anabin regulations, "${a.name}" and "${b.name}" are not considered independent of each other. You cannot use both together.`;
+                            break;
+                        }
+                    }
+                    if (conflictFound) break;
+                }
+
+                if (conflictFound) {
+                    showResult(false, 'overlap', conflictReason);
+                    return;
+                }
+
+                const requiresZAB = selected.some(s => s.zab === true);
+                showResult(true, requiresZAB ? 'zab' : 'success', "", selected);
+            }, 400);
         }
 
         function showResult(isValid, context, reasonTextString, subjects = []) {
